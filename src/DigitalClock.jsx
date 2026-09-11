@@ -17,7 +17,7 @@ function DigitalClock(){
 
    // quote new show garna api fetch gareko 
    useEffect(() => {
-        fetch("/api/api/random")
+          fetch("/api/api/random")
         .then(res => res.json())
         .then(data => setQuote(data[0].q))
         .catch(() => setQuote("Pani Piyo ta aaja ?"));
