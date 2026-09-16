@@ -243,6 +243,21 @@ function ToDo({ darkMode, setDarkMode }) {
                   </p>
                 </div>
 
+                <div className="spotify-embed">
+                  <span>Featured focus track</span>
+                  <iframe
+                    data-testid="embed-iframe"
+                    title="Featured Spotify focus track"
+                    src="https://open.spotify.com/embed/track/54RtfCu9vhgYzMRgaOCilH?utm_source=generator&si=6c7a57a83f384321"
+                    width="100%"
+                    height="152"
+                    frameBorder="0"
+                    allowFullScreen
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"
+                  />
+                </div>
+
                 <div className="audio-player">
                   <span>Spotify Playlist</span>
                   {spotifyConnected ? (

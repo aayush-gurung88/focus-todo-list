@@ -1,5 +1,5 @@
-import ToDo from "./ToDo.jsx"
-import { useState } from "react"
+import ToDo from "./ToDo.jsx";
+import { useState } from "react";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
@@ -13,4 +13,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
