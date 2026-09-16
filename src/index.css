@@ -410,6 +410,12 @@ audio {
   gap: 12px;
 }
 
+.spotify-embeds {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
 .spotify-embed span {
   font-weight: 700;
 }
@@ -480,5 +486,9 @@ audio {
   .theme-toggle,
   .primary-button {
     width: 100%;
+  }
+
+  .spotify-embeds {
+    grid-template-columns: 1fr;
   }
 }
