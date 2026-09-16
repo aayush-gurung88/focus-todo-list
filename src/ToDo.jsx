@@ -1,13 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import DigitalClock from "./DigitalClock";
 import Stopwatch from "./StopWatch";
-import {
-  beginSpotifyLogin,
-  disconnectSpotify,
-  finishSpotifyLogin,
-  getSpotifyPlaylists,
-  isSpotifyConnected,
-} from "./spotify";
 
 function ToDo({ darkMode, setDarkMode }) {
   const [tasks, setTasks] = useState(() => {
@@ -16,18 +9,6 @@ function ToDo({ darkMode, setDarkMode }) {
   });
 
   const [newTask, setNewTasks] = useState("");
-
-  const [spotifyConnected, setSpotifyConnected] = useState(isSpotifyConnected);
-  const [playlists, setPlaylists] = useState([]);
-  const [selectedPlaylist, setSelectedPlaylist] = useState("");
-  const spotifyCallbackHandled = useRef(false);
-  const [spotifyStatus, setSpotifyStatus] = useState(() =>
-    new URLSearchParams(window.location.search).get("error")
-      ? "Spotify sign-in was cancelled."
-      : "",
-  );
-
-  // const [selectedTask, setSelectedTask] = useState(null);
 
   const inputRef = useRef(null);
 
@@ -38,60 +19,6 @@ function ToDo({ darkMode, setDarkMode }) {
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
-    const error = params.get("error");
-
-    if (error) {
-      window.history.replaceState({}, "", "/");
-      return;
-    }
-
-    if (!code) return;
-    if (spotifyCallbackHandled.current) return;
-    spotifyCallbackHandled.current = true;
-
-    finishSpotifyLogin(code, params.get("state"))
-      .then(() => {
-        setSpotifyConnected(true);
-        setSpotifyStatus("Spotify connected. Choose a playlist below.");
-      })
-      .catch((loginError) => setSpotifyStatus(loginError.message))
-      .finally(() => window.history.replaceState({}, "", "/"));
-  }, []);
-
-  useEffect(() => {
-    if (!spotifyConnected) return;
-
-    getSpotifyPlaylists()
-      .then((items) => {
-        setPlaylists(items);
-        setSelectedPlaylist((current) => current || items[0]?.id || "");
-        if (!items.length) setSpotifyStatus("No Spotify playlists found.");
-      })
-      .catch((playlistError) => {
-        setSpotifyStatus(playlistError.message);
-        setSpotifyConnected(false);
-      });
-  }, [spotifyConnected]);
-
-  function handleSpotifyLogin() {
-    setSpotifyStatus("Opening Spotify sign-in…");
-    beginSpotifyLogin().catch((loginError) => setSpotifyStatus(loginError.message));
-  }
-
-  function handleSpotifyDisconnect() {
-    disconnectSpotify();
-    setSpotifyConnected(false);
-    setPlaylists([]);
-    setSelectedPlaylist("");
-    setSpotifyStatus("Spotify disconnected.");
-  }
-
-  const activePlaylist = playlists.find((playlist) => playlist.id === selectedPlaylist);
-
 
   function handleInputChange(event) {
     setNewTasks(event.target.value);
@@ -256,44 +183,6 @@ function ToDo({ darkMode, setDarkMode }) {
                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                     loading="lazy"
                   />
-                </div>
-
-                <div className="audio-player">
-                  <span>Spotify Playlist</span>
-                  {spotifyConnected ? (
-                    <>
-                      <select
-                        value={selectedPlaylist}
-                        onChange={(event) => setSelectedPlaylist(event.target.value)}
-                        aria-label="Select a Spotify playlist"
-                      >
-                        {playlists.map((playlist) => (
-                          <option key={playlist.id} value={playlist.id}>
-                            {playlist.name}
-                          </option>
-                        ))}
-                      </select>
-                      <div className="spotify-actions">
-                        <a
-                          className="primary-button spotify-link"
-                          href={activePlaylist?.external_urls?.spotify || "#"}
-                          target="_blank"
-                          rel="noreferrer"
-                          aria-disabled={!activePlaylist}
-                        >
-                          Open in Spotify
-                        </a>
-                        <button className="spotify-text-button" onClick={handleSpotifyDisconnect}>
-                          Disconnect
-                        </button>
-                      </div>
-                    </>
-                  ) : (
-                    <button className="primary-button" onClick={handleSpotifyLogin}>
-                      Connect Spotify
-                    </button>
-                  )}
-                  {spotifyStatus && <p className="spotify-status" role="status">{spotifyStatus}</p>}
                 </div>
 
                 <Stopwatch
