@@ -185,8 +185,10 @@ function ToDo({ darkMode, setDarkMode }) {
                   </button>
                 </div>
 
-                {showFeaturedTracks && (
-                  <div className="spotify-embeds">
+                <div
+                  className={`spotify-embeds ${showFeaturedTracks ? "" : "is-hidden"}`}
+                  aria-hidden={!showFeaturedTracks}
+                >
                     <div className="spotify-embed">
                       <span>Featured focus track</span>
                       <iframe
@@ -244,7 +246,6 @@ function ToDo({ darkMode, setDarkMode }) {
                       />
                     </div>
                   </div>
-                )}
 
                 <Stopwatch
                   savedTime={task.time}

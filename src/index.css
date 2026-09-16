@@ -430,6 +430,20 @@ audio {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
+  max-height: 400px;
+  overflow: hidden;
+  opacity: 1;
+  transition:
+    max-height 0.32s ease,
+    opacity 0.2s ease,
+    gap 0.32s ease;
+}
+
+.spotify-embeds.is-hidden {
+  max-height: 0;
+  gap: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .spotify-embed span {
@@ -506,5 +520,6 @@ audio {
 
   .spotify-embeds {
     grid-template-columns: 1fr;
+    max-height: 800px;
   }
 }
