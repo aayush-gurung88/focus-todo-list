@@ -248,8 +248,7 @@ audio {
   gap: 12px;
 }
 
-.todo-input input,
-.audio-player select {
+.todo-input input {
   width: 100%;
   padding: 14px 16px;
   color: var(--text);
@@ -267,8 +266,7 @@ audio {
   color: var(--muted);
 }
 
-.todo-input input:focus,
-.audio-player select:focus {
+.todo-input input:focus {
   border-color: rgba(44, 143, 107, 0.55);
   box-shadow: 0 0 0 4px var(--accent-soft);
 }
@@ -406,14 +404,12 @@ audio {
   line-height: 1.7;
 }
 
-.audio-player,
 .spotify-embed,
 .stopwatch {
   display: grid;
   gap: 12px;
 }
 
-.audio-player span,
 .spotify-embed span {
   font-weight: 700;
 }
@@ -423,46 +419,6 @@ audio {
   width: 100%;
   border: 0;
   border-radius: 12px;
-}
-
-.audio-player audio {
-  width: 100%;
-  max-width: 100%;
-}
-
-.spotify-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-}
-
-.spotify-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-}
-
-.spotify-link[aria-disabled="true"] {
-  pointer-events: none;
-  opacity: 0.55;
-}
-
-.spotify-text-button {
-  padding: 8px;
-  color: var(--muted);
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.spotify-status {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.9rem;
-  line-height: 1.45;
 }
 
 .stopwatch {
