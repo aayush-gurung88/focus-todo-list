@@ -404,6 +404,22 @@ audio {
   line-height: 1.7;
 }
 
+.track-toggle {
+  justify-self: start;
+  padding: 9px 12px;
+  color: var(--text);
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.track-toggle:hover {
+  border-color: var(--accent);
+}
+
 .spotify-embed,
 .stopwatch {
   display: grid;

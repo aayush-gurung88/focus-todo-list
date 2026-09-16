@@ -9,6 +9,9 @@ function ToDo({ darkMode, setDarkMode }) {
   });
 
   const [newTask, setNewTasks] = useState("");
+  const [showFeaturedTracks, setShowFeaturedTracks] = useState(() =>
+    localStorage.getItem("showFeaturedTracks") !== "false",
+  );
 
   const inputRef = useRef(null);
 
@@ -19,6 +22,10 @@ function ToDo({ darkMode, setDarkMode }) {
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
+
+  useEffect(() => {
+    localStorage.setItem("showFeaturedTracks", String(showFeaturedTracks));
+  }, [showFeaturedTracks]);
 
   function handleInputChange(event) {
     setNewTasks(event.target.value);
@@ -168,66 +175,76 @@ function ToDo({ darkMode, setDarkMode }) {
                     Set the mood, start the timer, and work on one thing at a
                     time.
                   </p>
+                  <button
+                    type="button"
+                    className="track-toggle"
+                    onClick={() => setShowFeaturedTracks((visible) => !visible)}
+                    aria-expanded={showFeaturedTracks}
+                  >
+                    {showFeaturedTracks ? "Hide featured tracks" : "Show featured tracks"}
+                  </button>
                 </div>
 
-                <div className="spotify-embeds">
-                  <div className="spotify-embed">
-                    <span>Featured focus track</span>
-                    <iframe
-                      data-testid="embed-iframe"
-                      title="Featured Spotify focus track"
-                      src="https://open.spotify.com/embed/track/54RtfCu9vhgYzMRgaOCilH?utm_source=generator&si=6c7a57a83f384321"
-                      width="100%"
-                      height="152"
-                      frameBorder="0"
-                      allowFullScreen
-                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                      loading="lazy"
-                    />
+                {showFeaturedTracks && (
+                  <div className="spotify-embeds">
+                    <div className="spotify-embed">
+                      <span>Featured focus track</span>
+                      <iframe
+                        data-testid="embed-iframe"
+                        title="Featured Spotify focus track"
+                        src="https://open.spotify.com/embed/track/54RtfCu9vhgYzMRgaOCilH?utm_source=generator&si=6c7a57a83f384321"
+                        width="100%"
+                        height="152"
+                        frameBorder="0"
+                        allowFullScreen
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="spotify-embed">
+                      <span>Featured focus track</span>
+                      <iframe
+                        data-testid="embed-iframe"
+                        title="Second featured Spotify focus track"
+                        src="https://open.spotify.com/embed/track/1RgIpHr4as1vh9abRreEVH?utm_source=generator&si=1c555a953bbd43c3"
+                        width="100%"
+                        height="152"
+                        frameBorder="0"
+                        allowFullScreen
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="spotify-embed">
+                      <span>Featured focus track</span>
+                      <iframe
+                        data-testid="embed-iframe"
+                        title="Third featured Spotify focus track"
+                        src="https://open.spotify.com/embed/track/6uLAlc8WCjwR4aOGDsjcCI?utm_source=generator&si=aaa4e4bb7c6541ed"
+                        width="100%"
+                        height="152"
+                        frameBorder="0"
+                        allowFullScreen
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="spotify-embed">
+                      <span>Featured focus track</span>
+                      <iframe
+                        data-testid="embed-iframe"
+                        title="Fourth featured Spotify focus track"
+                        src="https://open.spotify.com/embed/track/3yunUVncMdVo9YlaJi7TuG?utm_source=generator&si=1cad0936ea8f4c63"
+                        width="100%"
+                        height="152"
+                        frameBorder="0"
+                        allowFullScreen
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
-                  <div className="spotify-embed">
-                    <span>Featured focus track</span>
-                    <iframe
-                      data-testid="embed-iframe"
-                      title="Second featured Spotify focus track"
-                      src="https://open.spotify.com/embed/track/1RgIpHr4as1vh9abRreEVH?utm_source=generator&si=1c555a953bbd43c3"
-                      width="100%"
-                      height="152"
-                      frameBorder="0"
-                      allowFullScreen
-                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="spotify-embed">
-                    <span>Featured focus track</span>
-                    <iframe
-                      data-testid="embed-iframe"
-                      title="Third featured Spotify focus track"
-                      src="https://open.spotify.com/embed/track/6uLAlc8WCjwR4aOGDsjcCI?utm_source=generator&si=aaa4e4bb7c6541ed"
-                      width="100%"
-                      height="152"
-                      frameBorder="0"
-                      allowFullScreen
-                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="spotify-embed">
-                    <span>Featured focus track</span>
-                    <iframe
-                      data-testid="embed-iframe"
-                      title="Fourth featured Spotify focus track"
-                      src="https://open.spotify.com/embed/track/3yunUVncMdVo9YlaJi7TuG?utm_source=generator&si=1cad0936ea8f4c63"
-                      width="100%"
-                      height="152"
-                      frameBorder="0"
-                      allowFullScreen
-                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
+                )}
 
                 <Stopwatch
                   savedTime={task.time}
